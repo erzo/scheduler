@@ -1,30 +1,31 @@
 import React from "react";
+import InterviewerListItem from "components/InterviewerListItem";
 
-import classnames from 'classnames';
+import "components/InterviewerList.scss";
 
-// import "components/DayListItem.scss";
+export default function InterviewerList(props) {
 
-export default function DayList(props) {
+  let interviewerList = "";
 
-  let daysList = "";
-
-  if(Array.isArray(props.days)) {
-    daysList = props.days.map(day => (
-      <DayListItem
-        key= {day.id}
-        name={day.name}
-        spots={day.spots}
-        selected={day.name === props.day}
-        setDay={props.setDay}
+  if(Array.isArray(props.interviewers)) {
+    interviewerList = props.interviewers.map(interviewer => (
+      <InterviewerListItem
+        key= {interviewer.id}
+        name={interviewer.name}
+        avatar={interviewer.avatar}
+        selected={interviewer.id === props.interviewer}
+        setInterviewer={props.setInterviewer}
         />
       ))
-    // console.log(daysList);
+    // console.log(interviewerList);
   }
   
   return (
     <section className="interviewers">
       <h4 className="interviewers__header text--light">Interviewer</h4>
-      <ul className="interviewers__list"></ul>
+      <ul className={"interviewers__list"}>
+      { interviewerList }
+      </ul>
     </section>
   );
 }
