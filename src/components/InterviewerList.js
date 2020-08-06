@@ -21,18 +21,6 @@ export default function InterviewerList(props) {
       ))
     // console.log(interviewerList);
   }
-
-  // const interviewers = props.interviewers.map(interviewer => {
-  //   return (
-  //     <InterviewerListItem
-  //       key={interviewer.id}
-  //       name={interviewer.name}
-  //       avatar={interviewer.avatar}
-  //       selected={interviewer.id === props.interviewer}
-  //       setInterviewer={event => props.setInterviewer(interviewer.id)}
-  //     />
-  //   );
-  // });
   
 
   return (
