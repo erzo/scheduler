@@ -17,7 +17,6 @@ export default function Form(props) {
     setInterviewer(prevState => {
       return null;
     });
-    // props.onCancel();
   }
 
   const cancel = () => {
@@ -29,6 +28,7 @@ export default function Form(props) {
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
+        
         <form autoComplete="off">
           <input
             className="appointment__create-input text--semi-bold"
@@ -42,8 +42,14 @@ export default function Form(props) {
             */
           />
         </form>
-        <InterviewerList interviewers={props.interviewers} value={interviewer} setInterviewer={setInterviewer} />
+
+        <InterviewerList
+          interviewers={props.interviewers} 
+          value={interviewer} 
+          setInterviewer={setInterviewer} 
+        />
       </section>
+
       <section className="appointment__card-right">
         <section className="appointment__actions">
           <Button danger onClick={event => cancel()}>Cancel</Button>
