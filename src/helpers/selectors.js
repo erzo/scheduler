@@ -1,4 +1,4 @@
-export default function getAppointmentsForDay(state, day) {
+const getAppointmentsForDay = function(state, day) {
   let days = state.days;
   let appointments = state.appointments;
   let selectedDay = [];
@@ -15,3 +15,22 @@ export default function getAppointmentsForDay(state, day) {
   console.log(appointment);
   return appointment;
 };
+
+const getInterview = function(state, interview){
+  if(!interview){
+    return null;
+  } else{
+    let interviewer = interview.interviewer;
+    let student = interview.student;
+    for(let inter in state.interviewers){
+      if(interviewer === Number(inter)){
+        return {student:student, interviewer:state.interviewers[inter]};
+      }
+    }
+  }
+}
+
+export {
+  getAppointmentsForDay, 
+  getInterview
+}
