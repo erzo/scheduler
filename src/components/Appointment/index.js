@@ -37,6 +37,7 @@ export default function Appointment(props) {
     transition(SAVING);
     props.bookInterview(props.id, interview)
     .then(res => {
+      props.copyDays(props.id, interview);
       transition(SHOW);
     })
     .catch(error => {
@@ -97,6 +98,7 @@ export default function Appointment(props) {
       {mode === EDIT && 
       <Form
         onSave={save}
+        
         onCancel={()=> {
           back();
         }}
