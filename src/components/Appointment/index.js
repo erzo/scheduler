@@ -18,6 +18,7 @@ const CREATE = "CREATE";
 const SAVING = "SAVING";
 const DELETE = "DELETE";
 const CONFIRM = "CONFIRM";
+const EDIT = "EDIT";
 
 export default function Appointment(props) {
   
@@ -52,34 +53,56 @@ export default function Appointment(props) {
       console.log(error);
     })
   }
+
   
   return(
     <article className="appointment">
     <Header time={props.time}/>
+
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
+
       {mode === SHOW && (
         <Show
-        student={props.interview.student}
-        interviewer={props.interview.interviewer.name}
-        onDelete={()=>{
-          transition(CONFIRM)}}
-        />
-        )}
+          student={props.interview.student}
+          interviewer={props.interview.interviewer.name}
+          onDelete={()=>{
+            transition(CONFIRM)}}
+          onEdit={()=> {
+            transition(EDIT)}}
+          />
+      )}
+
       {mode === CREATE && 
-      <Form 
-      interviewers={props.interviewers} 
-      onCancel={(() => back())}
-      onSave={save}
+        <Form 
+        interviewers={props.interviewers} 
+        onCancel={(() => back())}
+        onSave={save}
       />}
-      {mode === CONFIRM && <Confirm 
-      onCancel={()=>{
-        back();
-      }}
-      onConfirm={()=>{
-        deleteAction();
-      }}
-      message={"ARE YOU SURE YOU WANT TO DELETE?"}/>}
+
+      {mode === CONFIRM && 
+      <Confirm 
+        onCancel={()=>{
+          back();
+        }}
+        onConfirm={()=>{
+          deleteAction();
+        }}
+        message={"ARE YOU SURE YOU WANT TO DELETE?"}
+      />}
+
+      {mode === EDIT && 
+      <Form
+        onSave={save}
+        onCancel={()=> {
+          back();
+        }}
+        name={props.interview.student}
+        interviewer={props.interview.interviewer.id}
+        interviewers={props.interviewers}
+      />}
+
       {mode === SAVING && <Status message={"SAVING"}/>}
+
       {mode === DELETE && <Status message={"DELETING"}/>}
     </article>
   )
