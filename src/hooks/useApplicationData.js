@@ -35,21 +35,53 @@ export default function useApplicationData (props) {
       ...state.appointments[id],
       interview: { ...interview }
     };
+    // const appointments = {
+    //   ...state.appointments,
+    //   [id]: appointment
+    // };
+    // setState({
+    //   ...state,
+    //   appointments
+    // });
+    
+    return axios.put(`/api/appointments/${id}`, appointment)
+
+  }
+
+  const copyDays = function(id,interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
     const appointments = {
       ...state.appointments,
       [id]: appointment
     };
-    setState({
-      ...state,
-      appointments
-    });
-
-    return axios.put(`/api/appointments/${id}`, appointment)
+    // setState({
+    //   ...state,
+    //   appointments
+    // });
+    const daysCopy = [];
+    for (let element of state.days) {
+      daysCopy.push(element);
+      if (element.name === state.day) {
+        daysCopy[daysCopy.indexOf(element)].spots -=1;
+      }
+      setState({
+        ...state, 
+        days: daysCopy,
+        appointments
+      })
+      // return setState({
+      //   ...state,
+      //   appointments
+      // });
+    }
   }
 
   function cancelInterview(id) {
     
-    return axios.delete(`/api/appointments/${id}`);
+    return axios.delete(`/api/appointments/${id}`)
   }
   
   function updateInterview(id) {
@@ -72,5 +104,7 @@ export default function useApplicationData (props) {
     setDay,
     bookInterview, 
     cancelInterview, 
-    updateInterview }
+    updateInterview,
+    copyDays 
+  }
 }
