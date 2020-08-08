@@ -74,10 +74,6 @@ import "components/Application.scss";
 
 export default function Application(props) {
 
-  // const [day, setDay] = useState("Monday");
-
-  // const [days, setDays] = useState([]);
-
   const [state, setState] = useState({
     day: "Monday",
     days: [],
@@ -86,10 +82,6 @@ export default function Application(props) {
   });
 
   const setDay = day => setState({ ...state, day });
-  // const setDays = days => setState(prev => ({ ...prev, days }));
-  
-  // const state = { day: "Monday", days: [] };
-  // setState({ ...state, day: "Tuesday" });
 
   useEffect(() => {
     Promise.all([
@@ -121,8 +113,30 @@ export default function Application(props) {
       time={appointment.time}
       interview={setInterview}
       interviewers={setInterviewers}
+      bookInterview={bookInterview}
     />)
   })
+
+  function bookInterview(id, interview) {
+    console.log(id, interview);
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    setState({
+      ...state,
+      appointments
+    });
+
+
+    return axios.put(`/api/appointments/${id}`, appointment)
+    
+  }
+
 
   return (
     <main className="layout">
@@ -141,7 +155,10 @@ export default function Application(props) {
       </section>
       <section className="schedule">
         {schedule}
-        <Appointment key="last" time="5pm" />
+        <Appointment 
+        key="last" 
+        time="5pm" 
+        bookInterview={bookInterview} />
       </section>
     </main>
   );
