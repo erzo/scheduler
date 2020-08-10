@@ -48,6 +48,7 @@ export default function useApplicationData (props) {
 
   }
 
+  /* ------ reduces the spots for the specific  day  --------*/
   const copyDays = function(id,interview) {
     const appointment = {
       ...state.appointments[id],
@@ -66,6 +67,38 @@ export default function useApplicationData (props) {
       daysCopy.push(element);
       if (element.name === state.day) {
         daysCopy[daysCopy.indexOf(element)].spots -=1;
+      }
+      setState({
+        ...state, 
+        days: daysCopy,
+        appointments
+      })
+      // return setState({
+      //   ...state,
+      //   appointments
+      // });
+    }
+  }
+
+  /* ------ adds to the spots for the specific  day  --------*/
+  const addsToSpots = function(id,interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    // setState({
+    //   ...state,
+    //   appointments
+    // });
+    const daysCopy = [];
+    for (let element of state.days) {
+      daysCopy.push(element);
+      if (element.name === state.day) {
+        daysCopy[daysCopy.indexOf(element)].spots +=1;
       }
       setState({
         ...state, 
@@ -105,6 +138,7 @@ export default function useApplicationData (props) {
     bookInterview, 
     cancelInterview, 
     updateInterview,
-    copyDays 
+    copyDays,
+    addsToSpots 
   }
 }
