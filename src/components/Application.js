@@ -82,7 +82,8 @@ export default function Application(props) {
     bookInterview,
     cancelInterview,
     updateInterview,
-    copyDays
+    copyDays,
+    addsToSpots
   } = useApplicationData();
 
 
@@ -103,6 +104,7 @@ export default function Application(props) {
       cancelInterview={cancelInterview}
       updateInterview={updateInterview}
       copyDays={copyDays}
+      addsToSpots={addsToSpots}
     />)
   })
 
