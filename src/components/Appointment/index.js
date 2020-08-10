@@ -51,6 +51,7 @@ export default function Appointment(props) {
     props.cancelInterview(props.id)
     .then(()=>{
       props.updateInterview(props.id);
+      props.addsToSpots(props.id);
       transition(EMPTY);
     })
     .catch(error => {
@@ -98,7 +99,7 @@ export default function Appointment(props) {
       {mode === EDIT && 
       <Form
         onSave={save}
-        
+
         onCancel={()=> {
           back();
         }}
