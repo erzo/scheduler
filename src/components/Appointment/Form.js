@@ -31,7 +31,8 @@ export default function Form(props) {
       return;
     }
   
-    props.onSave(name, interviewer);
+    setError("");
+  props.onSave(name, interviewer);
   }
   
 
@@ -39,14 +40,16 @@ export default function Form(props) {
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
         
-        <form autoComplete="off">
+        <form autoComplete="off" onSubmit={event => event.preventDefault()}>
           <input
             className="appointment__create-input text--semi-bold"
             value={name}
             type="text"
             placeholder="Enter Student Name"
-            onChange={(event) => setName(event.target.value)}
-            onSubmit={event => event.preventDefault()}
+            onChange={(event) => 
+              setName(event.target.value)
+            }
+            // onSubmit={event => event.preventDefault()}
             data-testid="student-name-input"
             /*
               This must be a controlled component
