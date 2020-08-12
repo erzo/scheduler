@@ -46,6 +46,23 @@ export default function Appointment(props) {
     })
   }
 
+  function edit(name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer
+    };
+    transition(SAVING);
+    props.bookInterview(props.id, interview)
+    .then(res => {
+      props.editDays(props.id, interview);
+      transition(SHOW);
+    })
+    .catch(error => {
+      transition(ERROR_SAVE, true)
+      console.log(error);
+    })
+  }
+
   function deleteAction() {
     transition(DELETE, true);
     props.cancelInterview(props.id)
@@ -62,7 +79,7 @@ export default function Appointment(props) {
 
   
   return(
-    <article className="appointment">
+    <article className="appointment" data-testid="appointment">
     <Header time={props.time}/>
 
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
@@ -98,7 +115,7 @@ export default function Appointment(props) {
 
       {mode === EDIT && 
       <Form
-        onSave={save}
+        onSave={edit}
 
         onCancel={()=> {
           back();
