@@ -19,7 +19,7 @@ export default function useApplicationData (props) {
       Promise.resolve(axios.get("/api/interviewers")),
     ])
     .then((all) => {
-      console.log("interviewer: ", all[2].data);
+      // console.log("interviewer: ", all[2].data); < -- fixed aug/11
       setState(prev => ({
         ...prev, 
         days: all[0].data, 
@@ -30,7 +30,7 @@ export default function useApplicationData (props) {
   }, [])
 
   function bookInterview(id, interview) {
-    console.log(id, interview);
+    // console.log(id, interview);
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -68,6 +68,35 @@ export default function useApplicationData (props) {
       if (element.name === state.day) {
         daysCopy[daysCopy.indexOf(element)].spots -=1;
       }
+      setState({
+        ...state, 
+        days: daysCopy,
+        appointments
+      })
+      // return setState({
+      //   ...state,
+      //   appointments
+      // });
+    }
+  }
+
+
+  const editDays = function(id,interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    // setState({
+    //   ...state,
+    //   appointments
+    // });
+    const daysCopy = [];
+    for (let element of state.days) {
+      daysCopy.push(element);
       setState({
         ...state, 
         days: daysCopy,
@@ -139,6 +168,7 @@ export default function useApplicationData (props) {
     cancelInterview, 
     updateInterview,
     copyDays,
-    addsToSpots 
+    addsToSpots,
+    editDays
   }
 }
