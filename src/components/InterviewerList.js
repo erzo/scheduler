@@ -12,7 +12,7 @@ InterviewerList.propTypes = {
 export default function InterviewerList(props) {
 
   // let interviewerList = "";
-console.log("interviewer: ", props.interviewer);
+// console.log("interviewer: ", props.interviewer);
   // if(Array.isArray(props.interviewers)) {
     let interviewerList = props.interviewers.map(interviewer => (
       <InterviewerListItem
