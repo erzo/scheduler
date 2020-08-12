@@ -12,7 +12,7 @@ const getAppointmentsForDay = function(state, day) {
 
     appointment.push(appointments[selectedDay[j]]);
   }
-  console.log(appointment);
+  // console.log(appointment);
   return appointment;
 };
 
