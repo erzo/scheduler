@@ -19,7 +19,6 @@ export default function useApplicationData (props) {
       Promise.resolve(axios.get("/api/interviewers")),
     ])
     .then((all) => {
-      // console.log("interviewer: ", all[2].data); < -- fixed aug/11
       setState(prev => ({
         ...prev, 
         days: all[0].data, 
@@ -29,22 +28,22 @@ export default function useApplicationData (props) {
     })
   }, [])
 
-  function bookInterview(id, interview) {
-    // console.log(id, interview);
+
+  /* ------ books interview for the day  --------*/
+  function bookInterview(id, interview, editFlag) {
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
     };
-    // const appointments = {
-    //   ...state.appointments,
-    //   [id]: appointment
-    // };
-    // setState({
-    //   ...state,
-    //   appointments
-    // });
     
     return axios.put(`/api/appointments/${id}`, appointment)
+    .then(res => {
+      if(editFlag){
+      editDays(id, interview);
+      } else {
+      copyDays(id, interview);
+      }
+    })
 
   }
 
@@ -58,10 +57,6 @@ export default function useApplicationData (props) {
       ...state.appointments,
       [id]: appointment
     };
-    // setState({
-    //   ...state,
-    //   appointments
-    // });
     const daysCopy = [];
     for (let element of state.days) {
       daysCopy.push(element);
@@ -73,14 +68,10 @@ export default function useApplicationData (props) {
         days: daysCopy,
         appointments
       })
-      // return setState({
-      //   ...state,
-      //   appointments
-      // });
     }
   }
 
-
+/* ------ edits the appointment for specific day  --------*/
   const editDays = function(id,interview) {
     const appointment = {
       ...state.appointments[id],
@@ -90,10 +81,6 @@ export default function useApplicationData (props) {
       ...state.appointments,
       [id]: appointment
     };
-    // setState({
-    //   ...state,
-    //   appointments
-    // });
     const daysCopy = [];
     for (let element of state.days) {
       daysCopy.push(element);
@@ -102,10 +89,6 @@ export default function useApplicationData (props) {
         days: daysCopy,
         appointments
       })
-      // return setState({
-      //   ...state,
-      //   appointments
-      // });
     }
   }
 
@@ -119,10 +102,6 @@ export default function useApplicationData (props) {
       ...state.appointments,
       [id]: appointment
     };
-    // setState({
-    //   ...state,
-    //   appointments
-    // });
     const daysCopy = [];
     for (let element of state.days) {
       daysCopy.push(element);
@@ -134,16 +113,17 @@ export default function useApplicationData (props) {
         days: daysCopy,
         appointments
       })
-      // return setState({
-      //   ...state,
-      //   appointments
-      // });
     }
   }
 
+  /* ------ cancels interview for specific time  --------*/
   function cancelInterview(id) {
     
     return axios.delete(`/api/appointments/${id}`)
+    .then(()=>{
+      updateInterview(id);
+      addsToSpots(id);
+    })
   }
   
   function updateInterview(id) {
