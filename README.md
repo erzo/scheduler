@@ -19,7 +19,10 @@ Delete Confirmation Message - Delete confirmation message as feedback to double 
 
 ## Setup
 
-Install dependencies with `npm install`.
+Install dependencies with:
+```sh
+npm install
+```
 
 ## Running Webpack Development Server
 
