@@ -37,7 +37,7 @@ export default function Appointment(props) {
     transition(SAVING);
     props.bookInterview(props.id, interview)
     .then(res => {
-      props.copyDays(props.id, interview);
+      // props.copyDays(props.id, interview);
       transition(SHOW);
     })
     .catch(error => {
@@ -52,9 +52,9 @@ export default function Appointment(props) {
       interviewer
     };
     transition(SAVING);
-    props.bookInterview(props.id, interview)
+    props.bookInterview(props.id, interview, true)
     .then(res => {
-      props.editDays(props.id, interview);
+      // props.editDays(props.id, interview);
       transition(SHOW);
     })
     .catch(error => {
@@ -67,8 +67,8 @@ export default function Appointment(props) {
     transition(DELETE, true);
     props.cancelInterview(props.id)
     .then(()=>{
-      props.updateInterview(props.id);
-      props.addsToSpots(props.id);
+      // props.updateInterview(props.id);
+      // props.addsToSpots(props.id);
       transition(EMPTY);
     })
     .catch(error => {
